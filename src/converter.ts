@@ -139,7 +139,8 @@ export function partToString(
   unit: Unit,
   humanize?: boolean,
   leadingZero?: LeadingZero,
-  clockFormat?: ClockFormat
+  clockFormat?: ClockFormat,
+  optionsList?: string[]
 ) {
   let retval = ''
 
@@ -157,13 +158,15 @@ export function partToString(
           unit,
           humanize,
           leadingZero,
-          clockFormat
+          clockFormat,
+          optionsList
         )}-${formatValue(
           getMax(cronPart),
           unit,
           humanize,
           leadingZero,
-          clockFormat
+          clockFormat,
+          optionsList
         )}/${step}`
       }
     } else {
@@ -175,17 +178,19 @@ export function partToString(
               unit,
               humanize,
               leadingZero,
-              clockFormat
+              clockFormat,
+              optionsList
             )}-${formatValue(
               range[1],
               unit,
               humanize,
               leadingZero,
-              clockFormat
+              clockFormat,
+              optionsList
             )}`
           }
 
-          return formatValue(range, unit, humanize, leadingZero, clockFormat)
+          return formatValue(range, unit, humanize, leadingZero, clockFormat, optionsList)
         })
         .join(',')
     }
@@ -201,7 +206,8 @@ export function formatValue(
   unit: Unit,
   humanize?: boolean,
   leadingZero?: LeadingZero,
-  clockFormat?: ClockFormat
+  clockFormat?: ClockFormat,
+  optionsList?: string[]
 ) {
   let cronPartString = value.toString()
   const { type, alt, min } = unit
@@ -211,7 +217,7 @@ export function formatValue(
     clockFormat === '24-hour-clock' && (type === 'hours' || type === 'minutes')
 
   if ((humanize && type === 'week-days') || (humanize && type === 'months')) {
-    cronPartString = alt![value - min]
+    cronPartString = optionsList ? optionsList![value - min] : alt![value - min]
   } else if (value < 10 && (needLeadingZero || need24HourClock)) {
     cronPartString = cronPartString.padStart(2, '0')
   }

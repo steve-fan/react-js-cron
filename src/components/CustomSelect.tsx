@@ -53,7 +53,8 @@ export default function CustomSelect(props: CustomSelectProps) {
             unit,
             humanizeLabels,
             leadingZero,
-            clockFormat
+            clockFormat,
+            optionsList
           ),
         }
       })
@@ -76,7 +77,8 @@ export default function CustomSelect(props: CustomSelectProps) {
         unit,
         humanizeLabels,
         leadingZero,
-        clockFormat
+        clockFormat,
+        optionsList
       )
       const testEveryValue = cronValue.match(/^\*\/([0-9]+),?/) || []
 
@@ -91,7 +93,7 @@ export default function CustomSelect(props: CustomSelectProps) {
       )
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [value, localeJSON, humanizeLabels, leadingZero, clockFormat]
+    [value, localeJSON, humanizeLabels, leadingZero, clockFormat, optionsList]
   )
 
   const simpleClick = useCallback(
